@@ -38,6 +38,9 @@ DI()->notorm = new PhalApi_DB_NotORM(DI()->config->get('dbs'), !empty($_GET['__s
 SL('zh_cn');
 
 /** ---------------- 定制注册 可选服务组件 ---------------- **/
+// 配置图片引擎
+$loader->addDirs('Library');
+DI()->ucloud = new UCloud_Lite();
 
 /**
 //签名验证服务

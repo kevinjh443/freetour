@@ -30,7 +30,7 @@ $root = dirname(__FILE__);
  * 项目的文件夹名
  * TODO: 请根据需要，修改成你的项目名称
  */
-$apiDirName = 'Demo';
+$apiDirName = 'Freetour';
 
 /**
  * 扩展类库

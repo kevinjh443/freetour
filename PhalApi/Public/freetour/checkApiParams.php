@@ -8,7 +8,7 @@ require_once dirname(__FILE__) . '/../init.php';
 /**
  * TODO: 装载你的接口
  */
-DI()->loader->addDirs('Demo');
+DI()->loader->addDirs('Freetour');
 
 /**
  * 扩展类库
