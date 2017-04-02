@@ -8,8 +8,9 @@
 
 class Model_ImageUpload {
 
-    public function imageSave($file, $file_name) {
-        DI()->ucloud->set('save_path', 'Images/'.date('Y/m/d'));
+    public function imageSaveToTopTitle($file, $file_name) {
+        DI()->ucloud->set('save_path', '');
+        DI()->ucloud->set('default_path', 'TopTitle');
         DI()->ucloud->set('file_name', $file_name);
         return DI()->ucloud->upfile($file);
     }

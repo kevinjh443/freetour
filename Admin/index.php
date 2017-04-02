@@ -6,6 +6,7 @@
  * Time: 16:35
  */
 require_once('CommonApiPath.php');
+require_once('../PhalApi/Config/CommonVar.php');
 ?>
 
 <!DOCTYPE html>
@@ -24,14 +25,163 @@ require_once('CommonApiPath.php');
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <script src="../Libs/jquery/jquery-3.2.0.min.js"></script>
     <script src="../Bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="../PhalApi/SDK/JS/js/SDK/PhalApi.js"></script>
 </head>
 <body>
-<h3>上传封面图片</h3>
-<? echo $apiPath?>
+<h3>一、上传封面图片</h3>
+<h4>1， 顶端系统说明图</h4>（若存在会自动覆盖）
 <form method="POST" action="<? echo $imageUploadInterface?>" enctype="multipart/form-data">
     <input type="file" name="file">
-    <input name="image_func" type="hidden" value="coverimage">
+    <input name="image_func" type="hidden" value="<? echo $TopTitle_systemIntroduce?>">
     <input type="submit">
 </form>
+<br/>
+<h4>2， 印象宣传主题图</h4>（若存在会自动覆盖）
+<form method="POST" action="<? echo $imageUploadInterface?>" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <input name="image_func" type="hidden" value="<? echo $TopTitle_impressionTopic?>">
+    <input type="submit">
+</form>
+<hr/>
+<br/><br/>
+<h3>二、内容上传</h3>
+<table class="gridtable">
+    <tr>
+        <th>项</th><th>描述</th><th>操作</th><th>结果</th><th>预览</th>
+    </tr>
+
+    <tr>
+        <td>序号</td>
+        <td>xxxx</td>
+        <td>
+            <select id="scenic_item_option">
+                <option selected="" value="0">新增</option>
+                <option value="1">修改</option>
+                <option value="2">删除</option>
+                <option value="3">排序</option>
+            </select>
+            <input type="button" id="do_scenic_item_option" value="确认操作" onclick = "doScenicItemOption()"/>
+        </td>
+        <td><div id="result_scenic_item_option">---</div></td>
+        <td><a href="">--</a></td>
+    </tr>
+
+    <tr>
+        <td>景点封面图</td>
+        <td>xxxx</td>
+        <td>
+            <form method="POST" action="<? echo $imageUploadInterface?>" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <input name="image_func" type="hidden" value="scenicTitle">
+                <input type="submit">
+            </form>
+        </td>
+        <td>---</td>
+        <td><a href="">--</a></td>
+    </tr>
+
+
+    <tr>
+        <td>语音介绍</td>
+        <td>xxxx</td>
+        <td>
+            <form method="POST" action="<? echo $imageUploadInterface?>" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <input name="image_func" type="hidden" value="scenicTitle">
+                <input type="submit">
+            </form>
+        </td>
+        <td>---</td>
+        <td><a href="">--</a></td>
+    </tr>
+
+    <tr>
+        <td>文字介绍</td>
+        <td>xxxx</td>
+        <td>
+            <form method="POST" action="<? echo $imageUploadInterface?>" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <input name="image_func" type="hidden" value="scenicTitle">
+                <input type="submit">
+            </form>
+        </td>
+        <td>---</td>
+        <td><a href="">--</a></td>
+    </tr>
+
+    <tr>
+        <td>其他图片</td>
+        <td>xxxx</td>
+        <td>
+            <form method="POST" action="<? echo $imageUploadInterface?>" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <input name="image_func" type="hidden" value="scenicTitle">
+                <input type="submit">
+            </form>
+        </td>
+        <td>---</td>
+        <td><a href="">--</a></td>
+    </tr>
+</table>
+
+
+<br/><br/><br/><br/><br/><br/>
 </body>
 </html>
+
+
+<!-- do script -->
+<script>
+    function doScenicItemOption() {
+        var options = $("#scenic_item_option option:selected");  //获取选中的项
+        //alert(options.val());
+        var url = '../PhalApi/Public/';
+        var api = 'ScenicContentOperation.addScenicId';
+        query_post(url, api, {}, callback_doScenicItemOption);
+    }
+
+    /**
+     * ready to draw chart
+     */
+    var callback_doScenicItemOption = function(rs) {
+        if(rs.ret != 200){
+            //如果失败打印失败信息并且做出相应的处理
+            alert(rs.msg);
+            return;
+        }
+        //alert(rs.data.info.path);
+        if(rs.data.info.path > 0) {
+            $("#result_scenic_item_option").html("新创建序号为："+rs.data.info.path);
+        } else {
+            $("#result_scenic_item_option").html("创建失败！");
+        }
+    };
+</script>
+
+
+
+<!-- CSS goes in the document HEAD or added to your external stylesheet -->
+<style type="text/css">
+    table.gridtable {
+        font-family: verdana,arial,sans-serif;
+        font-size:11px;
+        color:#333333;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+    }
+    table.gridtable th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #dedede;
+    }
+    table.gridtable td {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #ffffff;
+    }
+</style>

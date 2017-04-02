@@ -8,16 +8,16 @@
 
 class Domain_ImageUpload {
 
+    function __construct() {
+        //require_once('../../Config/CommonVar.php');
+    }
+
+
     public function imageUpload($file, $file_name) {
         $model = new Model_ImageUpload();
-        $res = $model->imageSave($file, $file_name);
-
-        if (!$res) {
-            $url = $res['url'];
-            $file_info = $res['file'];
-
-            $model = new Model_ImageUploadInfoSynvDB();
-            $model->imageSaveSyncDB($file_name, $url, $file_info);
+        if ('systemIntroduce' == $file_name || 'impressionTopic' == $file_name) {
+            return $model->imageSaveToTopTitle($file, $file_name);
         }
+        return null;
     }
 }
