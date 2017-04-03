@@ -26,6 +26,7 @@ require_once('../PhalApi/Config/CommonVar.php');
     <script src="../Libs/jquery/jquery-3.2.0.min.js"></script>
     <script src="../Bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="../PhalApi/SDK/JS/js/SDK/PhalApi.js"></script>
+    <script src="js/AdminFunction.js"></script>
 </head>
 <body>
 <h3>一、上传封面图片</h3>
@@ -132,30 +133,7 @@ require_once('../PhalApi/Config/CommonVar.php');
 
 <!-- do script -->
 <script>
-    function doScenicItemOption() {
-        var options = $("#scenic_item_option option:selected");  //获取选中的项
-        //alert(options.val());
-        var url = '../PhalApi/Public/';
-        var api = 'ScenicContentOperation.addScenicId';
-        query_post(url, api, {}, callback_doScenicItemOption);
-    }
 
-    /**
-     * ready to draw chart
-     */
-    var callback_doScenicItemOption = function(rs) {
-        if(rs.ret != 200){
-            //如果失败打印失败信息并且做出相应的处理
-            alert(rs.msg);
-            return;
-        }
-        //alert(rs.data.info.path);
-        if(rs.data.info.path > 0) {
-            $("#result_scenic_item_option").html("新创建序号为："+rs.data.info.path);
-        } else {
-            $("#result_scenic_item_option").html("创建失败！");
-        }
-    };
 </script>
 
 
