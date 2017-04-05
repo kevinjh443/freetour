@@ -21,12 +21,18 @@ function doScenicItemOption() {
             }
             query_post(url_path, api_name, {}, callback_doScenicItemOption);
             break;
-
+        case 1:// 删除
+            api_name = 'ScenicContentOperation.deleteScenic';
+            if (debug) {
+                console.log('api:'+api_name);
+            }
+            query_post(url_path, api_name, {}, callback_doScenicItemOption);
+            break;
     }
 }
 
 /**
- * ready to draw chart
+ *
  */
 var callback_doScenicItemOption = function(rs) {
     if(rs.ret != 200){

@@ -44,7 +44,7 @@ class PhpUnderControl_ApiDefault_Test extends PHPUnit_Framework_TestCase
         //Step 1. 构建请求URL
         $url = 'service=Default.Index&username=dogstar';
 
-        //Step 2. 执行请求	
+        //Step 1. 执行请求
         $rs = PhalApi_Helper_TestRunner::go($url);
 
         //Step 3. 验证

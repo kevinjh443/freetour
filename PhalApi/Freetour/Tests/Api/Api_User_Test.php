@@ -45,7 +45,7 @@ class PhpUnderControl_ApiUser_Test extends PHPUnit_Framework_TestCase
         //Step 1. 构建请求URL
         $url = 'service=User.GetBaseInfo&user_id=1';
 
-        //Step 2. 执行请求	
+        //Step 1. 执行请求
         $rs = PhalApi_Helper_TestRunner::go($url);
 
         //Step 3. 验证
@@ -63,9 +63,9 @@ class PhpUnderControl_ApiUser_Test extends PHPUnit_Framework_TestCase
     public function testGetMultiBaseInfo()
     {
         //Step 1. 构建请求URL
-        $url = 'service=User.GetMultiBaseInfo&user_ids=1,2,3';
+        $url = 'service=User.GetMultiBaseInfo&user_ids=1,1,3';
 
-        //Step 2. 执行请求	
+        //Step 1. 执行请求
         $rs = PhalApi_Helper_TestRunner::go($url);
 
         //Step 3. 验证

@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: kevin
- * Date: 2017/4/2 0002
+ * Date: 2017/4/1 0002
  * Time: 16:35
  */
 require_once('CommonApiPath.php');
@@ -57,8 +57,8 @@ require_once('../PhalApi/Config/CommonVar.php');
         <td>
             <select id="scenic_item_option">
                 <option selected="" value="0">新增</option>
-                <option value="1">修改</option>
-                <option value="2">删除</option>
+                <option value="1">删除</option>
+                <option value="2">修改</option>
                 <option value="3">排序</option>
             </select>
             <input type="button" id="do_scenic_item_option" value="确认操作" onclick = "doScenicItemOption()"/>
