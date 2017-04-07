@@ -20,6 +20,7 @@ class Api_ImageUpload extends PhalApi_Api {
                     'ext' => array('jpg', 'jpeg', 'png')
                 ),
                 'imageFunc' => array('name' => 'image_func'),
+                'scenicId' => array('name' => 'scenic_id'),
             ),
         );
     }
@@ -27,7 +28,7 @@ class Api_ImageUpload extends PhalApi_Api {
     public function upload() {
         $res = array('code' => 0, 'msg' => '', 'info' => '');
         $domain = new Domain_ImageUpload();
-        $res['info'] = $domain->imageUpload($this->file,$this->imageFunc );
+        $res['info'] = $domain->imageUpload($this->file, $this->imageFunc, $this->scenicId);
         return $res;
     }
 }

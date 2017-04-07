@@ -8,6 +8,8 @@
 
 class Model_ScenicContentOperation {
 
+    private $_TAG = 'Model_ScenicContentOperation';
+
     private function getFileDBRootPath(){
         $file_DB_root_path = dirname(dirname(__FILE__)).'/FileDB/';
         if (!is_dir($file_DB_root_path)) {
@@ -58,8 +60,6 @@ class Model_ScenicContentOperation {
 
     private function queryAllScenicIdFromDB() {
         try {
-
-
             $scenic_ids = array();
             $filenames = scandir($this->getFileDBRootPath());
             foreach ($filenames as $filename) {
@@ -86,17 +86,15 @@ class Model_ScenicContentOperation {
                 for ($i = 0; $i < sizeof($scenic_ids); $i++) {
                     if ($is_find_id){
                         $new_id = $scenic_ids[$i] - 1;
-                        sleep(0.1);
                         rename($this->getFileDBRootPath().$scenic_ids[$i], $this->getFileDBRootPath().$new_id);
                         $scenic_ids[$i] = $new_id;
                     } else {
                         if ($scenic_ids[$i] == $id) {
-                            array_splice($scenic_ids, $i, 1);
                             $this->delDir($this->getFileDBRootPath().'nextDelScenic');
-                            DI()->logger->debug('delete scenice dir', 'ID:'.$scenic_ids[$id]);
-                            sleep(0.1);
-                            rename($this->getFileDBRootPath().$scenic_ids[$id], $this->getFileDBRootPath().'nextDelScenic');
+                            DI()->logger->debug($this->_TAG, 'delete scenice dir ID:'.$scenic_ids[$i]);
+                            rename($this->getFileDBRootPath().$scenic_ids[$i], $this->getFileDBRootPath().'nextDelScenic');
                             $is_find_id = true;
+                            array_splice($scenic_ids, $i, 1);
                             $i--;
                         }
                     }
@@ -112,6 +110,17 @@ class Model_ScenicContentOperation {
             //return array_merge($res, $scenic_ids);
         } catch (Exception $e) {
             return array('error' => '删除scenic ID失败');
+        }
+    }
+
+
+    private function printDebugScenicID() {
+        if(DI()->debug) {
+            $ids = $this->queryAllScenicIdFromDB();
+            DI()->logger->debug($this->_TAG, 'printDebugScenicID:------------------');
+            foreach($ids as $id) {
+                DI()->logger->debug($this->_TAG, 'printDebugScenicID:'.$id);
+            }
         }
     }
 

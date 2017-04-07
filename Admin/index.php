@@ -26,7 +26,7 @@ require_once('../PhalApi/Config/CommonVar.php');
     <script src="../Libs/jquery/jquery-3.2.0.min.js"></script>
     <script src="../Bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="../PhalApi/SDK/JS/js/SDK/PhalApi.js"></script>
-    <script src="js/AdminFunction.js"></script>
+    <script src="./js/AdminFunction.js"></script>
 </head>
 <body>
 <h3>一、上传封面图片</h3>
@@ -63,7 +63,10 @@ require_once('../PhalApi/Config/CommonVar.php');
             </select>
             <input type="button" id="do_scenic_item_option" value="确认操作" onclick = "doScenicItemOption()"/>
         </td>
-        <td><div id="result_scenic_item_option">---</div></td>
+        <td>
+            <div id="result_scenic_item_option">---</div>
+            <div id="scenic_id">3</div>
+        </td>
         <td><a href="">--</a></td>
     </tr>
 
@@ -71,11 +74,9 @@ require_once('../PhalApi/Config/CommonVar.php');
         <td>景点封面图</td>
         <td>xxxx</td>
         <td>
-            <form method="POST" action="<? echo $imageUploadInterface?>" enctype="multipart/form-data">
                 <input type="file" name="file">
                 <input name="image_func" type="hidden" value="scenicTitle">
-                <input type="submit">
-            </form>
+                <input type="button" id="scenic_title_image_upload" value="确认提交" onclick = "scenicTitleImageUpload()">
         </td>
         <td>---</td>
         <td><a href="">--</a></td>
@@ -103,7 +104,7 @@ require_once('../PhalApi/Config/CommonVar.php');
             <form method="POST" action="<? echo $imageUploadInterface?>" enctype="multipart/form-data">
                 <input type="file" name="file">
                 <input name="image_func" type="hidden" value="scenicTitle">
-                <input type="submit">
+                <input type="button" value="提交" onclick="test()">
             </form>
         </td>
         <td>---</td>

@@ -15,4 +15,11 @@ class Model_ImageUpload {
         return DI()->ucloud->upfile($file);
     }
 
+    public function imageSaveToScenic($file, $file_name, $scenic_id) {
+        DI()->ucloud->set('save_path', '');
+        DI()->ucloud->set('default_path', $scenic_id);
+        DI()->ucloud->set('file_name', $file_name);
+        return DI()->ucloud->upfile($file);
+    }
+
 }

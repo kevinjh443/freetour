@@ -21,7 +21,7 @@ DI()->loader = $loader;
 DI()->config = new PhalApi_Config_File(API_ROOT . '/Config');
 
 //调试模式，$_GET['__debug__']可自行改名
-DI()->debug = !empty($_GET['__debug__']) ? true : DI()->config->get('sys.debug');
+DI()->debug = true;//!empty($_GET['__debug__']) ? true : DI()->config->get('sys.debug');
 
 if (DI()->debug) {
     error_reporting(E_ALL);

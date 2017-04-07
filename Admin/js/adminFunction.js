@@ -7,6 +7,23 @@ var debug = true;
 var url_path = '../PhalApi/Public/';
 var api_name = '';
 
+
+function test() {
+    alert('test');
+}
+
+
+function scenicTitleImageUpload() {
+    api_name = 'ImageUpload.upload';
+    var scenic_id = $("#scenic_id").html();
+    if (debug) {
+        alert('url:'+url_path+' api:'+api_name+' id:'+scenic_id);
+    }
+    var data = {};
+    data['scenic_id'] = scenic_id;
+    query_post(url_path, api_name, data, callback_scenicTitleImageUpload);
+}
+
 function doScenicItemOption() {
     var options = $("#scenic_item_option option:selected");  //获取选中的项
     //alert(options.val());
@@ -31,6 +48,12 @@ function doScenicItemOption() {
     }
 }
 
+
+
+var callback_scenicTitleImageUpload = function(rs) {
+    alert('callback_scenicTitleImageUpload');
+};
+
 /**
  *
  */
@@ -42,7 +65,8 @@ var callback_doScenicItemOption = function(rs) {
     }
     //alert(rs.data.info.path);
     if(rs.data.info.path > 0) {
-        $("#result_scenic_item_option").html("新创建序号为："+rs.data.info.path);
+        $("#result_scenic_item_option").html("新创建序号为：");
+        $("#scenic_id").html(rs.data.info.path);
     } else {
         $("#result_scenic_item_option").html("创建失败！");
     }

@@ -13,10 +13,12 @@ class Domain_ImageUpload {
     }
 
 
-    public function imageUpload($file, $file_name) {
+    public function imageUpload($file, $file_name, $scenic_id) {
         $model = new Model_ImageUpload();
         if ('systemIntroduce' == $file_name || 'impressionTopic' == $file_name) {
             return $model->imageSaveToTopTitle($file, $file_name);
+        } else {
+            return $model->imageSaveToScenic($file, $file_name, $scenic_id);
         }
         return null;
     }
