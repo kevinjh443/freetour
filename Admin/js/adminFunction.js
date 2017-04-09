@@ -16,12 +16,21 @@ function test() {
 function scenicTitleImageUpload() {
     api_name = 'ImageUpload.upload';
     var scenic_id = $("#scenic_id").html();
-    if (debug) {
-        alert('url:'+url_path+' api:'+api_name+' id:'+scenic_id);
+    if(isNaN(scenic_id)) {
+        alert('scenic id 不是数字');
+        return;
     }
-    var data = {};
-    data['scenic_id'] = scenic_id;
-    query_post(url_path, api_name, data, callback_scenicTitleImageUpload);
+    var file = $("#scenic_title_image_file")[0].files[0];
+    if (debug) {
+        //alert('url:'+url_path+' api:'+api_name+' id:'+scenic_id);
+    }
+    var data = new FormData();
+    data.append('scenic_id', scenic_id);
+    data.append('file', file);
+    if(debug) {
+        console.log(file.length);
+    }
+    query_post_file(url_path, api_name, data, callback_scenicTitleImageUpload);
 }
 
 function doScenicItemOption() {
@@ -51,7 +60,8 @@ function doScenicItemOption() {
 
 
 var callback_scenicTitleImageUpload = function(rs) {
-    alert('callback_scenicTitleImageUpload');
+    $("#scenic_title_image_view").html("<img src='"+rs.data.info.url+"' width=300 height=200 />");
+    //alert('callback_scenicTitleImageUpload');
 };
 
 /**

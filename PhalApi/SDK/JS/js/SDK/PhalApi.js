@@ -28,6 +28,31 @@
 var debug = true; //调试模式
 //-------------------------------配置项------------------------------------
 
+function query_post_file(api_url, api_name, data, callback) {
+    //拼接请求的URL地址
+    var fullapi = api_url + '?service=' + api_name;
+    //执行请求
+    $.ajax({
+        url        : fullapi,  //请求地址
+        method     : 'POST',   //请求方式
+        crossDomain: true,
+        data       : data,     //请求参数
+        cache: false,
+        contentType: false,//文件上传不可缺
+        processData: false,//文件上传不可缺
+        complete   : function(rs){
+            //反Json化
+            rs = JSON.parse(rs.response || rs.responseText);
+            //把返回结果返回到控制台(debug模式自动开启)
+            if(debug == true){
+                console.log(fullapi, 'back', rs);
+            }
+            //回调函数
+            callback(rs);
+        }
+    });
+}
+
 /**
  *  普通的post请求方法
  **/

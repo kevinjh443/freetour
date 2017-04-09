@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="up_load_file">
+     </div>
+ <script src="../Libs/jquery/jquery-3.2.0.min.js"></script>
+ <script src="uploadfile.js"></script>
+<br/><br/><br/><br/>
+<form method="POST" enctype="multipart/form-data" id="upload">
+    <input name="file" type="file" id="scenic_title_image_file" >
+    <input name="image_func" type="hidden" value="scenicTitle">
+    <input type="button" id="scenic_title_image_upload" value="确认提交" onclick = "uploadFile()">
+</form>
+
+ <script>
+
+    function uploadFile() {
+        var fullapi = 'upload.php';
+        var form = $("#upload");
+
+        var data = new FormData();
+        data.append('file', $("#scenic_title_image_file")[0].files[0]);
+
+
+
+
+        //执行请求
+        $.ajax({
+            url        : fullapi,  //请求地址
+            method     : 'POST',   //请求方式
+            crossDomain: true,
+            data       : data,     //请求参数
+            cache: false,
+            contentType: false,//文件上传不可缺
+            processData: false,//文件上传不可缺
+            complete   : function(rs){
+                //反Json化
+                //rs = JSON.parse(rs.response || rs.responseText);
+                //把返回结果返回到控制台(debug模式自动开启)
+                //if(debug == true){
+                    //console.log(fullapi, 'back', rs);
+                //}
+                //回调函数
+                //callback(rs);
+                alert('上传成功');
+            }
+        });
+    }
+
+
+    $('.up_load_file').uploadfile({
+        url : 'upload.php',
+        width : 500,
+        height : 50,
+        canDrag : true,
+        canMultiple : true,
+        success: function (fileName) {
+            alert(fileName + '上传成功');
+        },
+        error: function (fileName) {
+            alert(fileName + '上传失败');
+        },
+        complete : function () {
+            alert('所有文件上传完毕');
+        }
+    });
+</script>
+</body>
+</html>

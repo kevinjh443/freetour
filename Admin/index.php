@@ -65,7 +65,7 @@ require_once('../PhalApi/Config/CommonVar.php');
         </td>
         <td>
             <div id="result_scenic_item_option">---</div>
-            <div id="scenic_id">3</div>
+            <div id="scenic_id">2</div>
         </td>
         <td><a href="">--</a></td>
     </tr>
@@ -74,11 +74,13 @@ require_once('../PhalApi/Config/CommonVar.php');
         <td>景点封面图</td>
         <td>xxxx</td>
         <td>
-                <input type="file" name="file">
+            <form method="POST" enctype="multipart/form-data">
+                <input name="file" type="file" id="scenic_title_image_file" accept="image/*" >
                 <input name="image_func" type="hidden" value="scenicTitle">
                 <input type="button" id="scenic_title_image_upload" value="确认提交" onclick = "scenicTitleImageUpload()">
+            </form>
         </td>
-        <td>---</td>
+        <td><div id="scenic_title_image_view">--</div></td>
         <td><a href="">--</a></td>
     </tr>
 

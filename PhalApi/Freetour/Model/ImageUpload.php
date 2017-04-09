@@ -8,6 +8,8 @@
 
 class Model_ImageUpload {
 
+    private $_TAG = 'Model_ImageUpload';
+
     public function imageSaveToTopTitle($file, $file_name) {
         DI()->ucloud->set('save_path', '');
         DI()->ucloud->set('default_path', 'TopTitle');
@@ -16,10 +18,11 @@ class Model_ImageUpload {
     }
 
     public function imageSaveToScenic($file, $file_name, $scenic_id) {
+        DI()->logger->debug($this->_TAG, 'imageSaveToScenic');
         DI()->ucloud->set('save_path', '');
         DI()->ucloud->set('default_path', $scenic_id);
         DI()->ucloud->set('file_name', $file_name);
-        return DI()->ucloud->upfile($file);
+        return  DI()->ucloud->upfile($file);
     }
 
 }
