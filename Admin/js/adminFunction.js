@@ -26,6 +26,7 @@ function scenicTitleImageUpload() {
     }
     var data = new FormData();
     data.append('scenic_id', scenic_id);
+    data.append('image_func', $('#scenic_title_image_name').val());
     data.append('file', file);
     if(debug) {
         console.log(file.length);
@@ -81,3 +82,66 @@ var callback_doScenicItemOption = function(rs) {
         $("#result_scenic_item_option").html("创建失败！");
     }
 };
+
+
+function scenicVoiceUpload() {
+    api_name = 'VoiceUpload.upload';
+    var scenic_id = $("#scenic_id").html();
+    if(isNaN(scenic_id)) {
+        alert('scenic id 不是数字');
+        return;
+    }
+    var file = $("#scenic_voice_file")[0].files[0];
+    if (debug) {
+        //alert('url:'+url_path+' api:'+api_name+' id:'+scenic_id);
+    }
+    var data = new FormData();
+    data.append('scenic_id', scenic_id);
+    data.append('voice_func', $('#scenic_voice_name').val());
+    data.append('file', file);
+    if(debug) {
+        console.log(file.length);
+    }
+    query_post_file(url_path, api_name, data, callback_scenicVoiceUpload);
+}
+
+var callback_scenicVoiceUpload = function(rs) {
+    if(rs.ret != 200){
+        //如果失败打印失败信息并且做出相应的处理
+        alert(rs.msg);
+        return;
+    }
+    //alert(rs.data.info.path);
+    if(rs.data.info.url != null) {
+        $("#scenic_voice_view").html("上传成功："+rs.data.info.url);
+    } else {
+        $("#scenic_voice_view").html("上传失败！");
+    }
+};
+
+function getAllScenic() {
+    api_name = 'ScenicContent.getBaseInfo';
+    if (debug) {
+        //alert('url:'+url_path+' api:'+api_name+' id:'+scenic_id);
+    }
+    query_post(url_path, api_name, {}, callback_showingBaseScenic);
+}
+
+var callback_showingBaseScenic = function(rs) {
+    if(rs.ret != 200){
+        //如果失败打印失败信息并且做出相应的处理
+        alert(rs.msg);
+        return;
+    }
+    //alert(rs.data.info.path);
+    if(rs.data.info != null) {
+        $("#shoing_scenic_content").html("读取信息成功："+rs.data.info.url);
+    } else {
+        $("#shoing_scenic_content").html("读取信息失败！");
+    }
+};
+
+$(function() {//加载时执行
+    $("#shoing_scenic_content").html("读取数据。。。");
+
+});

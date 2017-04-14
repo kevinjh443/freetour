@@ -76,7 +76,7 @@ require_once('../PhalApi/Config/CommonVar.php');
         <td>
             <form method="POST" enctype="multipart/form-data">
                 <input name="file" type="file" id="scenic_title_image_file" accept="image/*" >
-                <input name="image_func" type="hidden" value="scenicTitle">
+                <input name="image_func" id="scenic_title_image_name" type="hidden" value="scenicTitle">
                 <input type="button" id="scenic_title_image_upload" value="确认提交" onclick = "scenicTitleImageUpload()">
             </form>
         </td>
@@ -89,13 +89,13 @@ require_once('../PhalApi/Config/CommonVar.php');
         <td>语音介绍</td>
         <td>xxxx</td>
         <td>
-            <form method="POST" action="<? echo $imageUploadInterface?>" enctype="multipart/form-data">
-                <input type="file" name="file">
-                <input name="image_func" type="hidden" value="scenicTitle">
-                <input type="submit">
+            <form method="POST" enctype="multipart/form-data">
+                <input name="file" type="file" id="scenic_voice_file" accept="*/*" >
+                <input name="voice_func" id="scenic_voice_name" type="hidden" value="scenicVoice">
+                <input type="button" id="scenic_voice_upload" value="确认提交" onclick = "scenicVoiceUpload()">
             </form>
         </td>
-        <td>---</td>
+        <td><div id="scenic_voice_view">--</div></td>
         <td><a href="">--</a></td>
     </tr>
 
@@ -129,7 +129,13 @@ require_once('../PhalApi/Config/CommonVar.php');
 </table>
 
 
-<br/><br/><br/><br/><br/><br/>
+<br/><br/><br/>
+<hr/>
+<br/><br/>
+三，删除
+<div id="shoing_scenic_content"> </div>
+
+<br/><br/><br/>
 </body>
 </html>
 

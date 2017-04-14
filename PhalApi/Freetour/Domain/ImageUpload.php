@@ -18,7 +18,7 @@ class Domain_ImageUpload {
         if ('systemIntroduce' == $file_name || 'impressionTopic' == $file_name) {
             return $model->imageSaveToTopTitle($file, $file_name);
         } else {
-            return $model->imageSaveToScenic($file, 'xxx', $scenic_id);
+            return $model->imageSaveToScenic($file, $file_name, $scenic_id);
         }
         return null;
     }
