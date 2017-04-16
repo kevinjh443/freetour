@@ -6,23 +6,225 @@
  * Time: 1:04
  */
 
-interface FileDB {
-    public function createNewScenicId();
-    public function addScenicImages($scenicId, $name, $file);
-    public function addScenicVoice($scenicId, $name, $file);
-    public function addScenicWords($scenicId, $name, $file);
+abstract class AFileDB {
 
-    public function delScenic($scenicId);
+    protected $_TAG = 'FileDB';
 
-    public function queryScenicIds();
-    public function queryAllScenicBaseInfo();
-    public function getScenicDetailInfo($scenicId);
+    function __construct() {
+        if(DI()->debug) {
+            DI()->logger->debug($this->_TAG, 'running in');
+        }
+    }
 
-    public function renameScenicIds($oriName, $newName);
+    /**
+     * @return string db root path
+     */
+    protected function getFileDBRootPath(){
+        $file_DB_root_path = dirname(__FILE__);
+        return $file_DB_root_path.'/';
+    }
+
+    protected function getHostFileDBRootPath() {
+        $hostAddr =  DI()->config->get('app.UCloud.host');//DI()->ucloud->get('host');
+        if(DI()->debug) {
+            DI()->logger->debug($this->_TAG, 'host addr : '.$hostAddr);
+        }
+        return $hostAddr.'/';
+    }
+
+    /**
+     * 创建目录
+     * @param  string $dir 要创建的目录
+     * @return boolean          创建状态，true-成功，false-失败
+     */
+    protected function mkdir($dir){
+        if(is_dir($dir)){
+            return true;
+        }
+        if(mkdir($dir, 0777, true)){
+            return true;
+        } else {
+            //$error = "目录 {$dir} 创建失败！";
+            return false;
+        }
+    }
+
+    /**
+     * @param $dir
+     * @return bool
+     */
+    protected function deldir($dir) {
+        if (!is_dir($dir)) {
+            return true;
+        }
+        //先删除目录下的文件：
+        $dh=opendir($dir);
+        while ($file=readdir($dh)) {
+            if ($file!="." && $file!="..") {
+                $fullpath=$dir."/".$file;
+                if (!is_dir($fullpath)) {
+                    unlink($fullpath);
+                } else {
+                    $this->deldir($fullpath);
+                }
+            }
+        }
+
+        closedir($dh);
+        //删除当前文件夹：
+        if (rmdir($dir)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    protected function queryAllScenicIdFromDB() {
+        try {
+            $scenic_ids = array();
+            $filenames = scandir($this->getFileDBRootPath());
+            foreach ($filenames as $filename) {
+                if (is_numeric($filename)) {
+                    array_push($scenic_ids, intval($filename, 10));
+                }
+            }
+            return $scenic_ids;
+        }catch (Exception $e) {
+            throw new Exception();
+        }
+    }
+
+
+    abstract function addScenicId();
+    abstract function addScenicFiles($dir, $name, $file);
+//    public function addScenicVoice($scenicId, $name, $file);
+//    public function addScenicWords($scenicId, $name, $file);
+//
+    abstract function delScenic($scenicId);
+//
+    abstract function queryScenicIds();
+    abstract function queryScenicContentUrls($scenicId);
+//    public function queryAllScenicBaseInfo();
+//    public function getScenicDetailInfo($scenicId);
+//
+    abstract function renameScenicIds($oriName, $newName);
 
 }
 
 
-class FileDBController implements FileDB {
+class FileDB extends  AFileDB {
 
+    function __construct() {
+        if(DI()->debug) {
+            DI()->logger->debug($this->_TAG, 'FILE DB');
+        }
+    }
+
+    /**
+     * @return array path id, or error info
+     */
+    public function addScenicId() {
+        $res = array('path' => '');
+        try {
+            if(DI()->debug) {
+                DI()->logger->debug($this->_TAG, $this->getFileDBRootPath());
+            }
+            $scenicIds = $this->queryAllScenicIdFromDB();
+            $maxId = -1;
+            foreach ($scenicIds as $id) {
+                if($id > $maxId) {
+                    $maxId = $id;
+                }
+            }
+            $maxId = $maxId + 1;//新的id
+            if(DI()->debug) {
+                DI()->logger->debug($this->_TAG, $this->getFileDBRootPath().$maxId);
+            }
+            if($this->mkdir($this->getFileDBRootPath().$maxId)) {
+                $res['path'] = $maxId;
+            } else {
+                $res['error'] = 'mkdir failed';
+            }
+        } catch (Exception $e) {
+            $res['error'] = 'add scenic id failed';
+        }
+        return $res;
+    }
+
+    /**
+     * @param $dir
+     * @param $name
+     * @param $file
+     * @return mixed
+     */
+    public function addScenicFiles($dir, $name, $file) {
+        DI()->ucloud->set('save_path', '');
+        DI()->ucloud->set('default_path', $dir);
+        DI()->ucloud->set('file_name', $name);
+        return DI()->ucloud->upfile($file);
+    }
+
+    protected function queryAllScenicIdFromDB()
+    {
+        return parent::queryAllScenicIdFromDB(); // TODO: Change the autogenerated stub
+    }
+
+    /**
+     * @param $oriName
+     * @param $newName
+     * @return bool
+     */
+    public function renameScenicIds($oriName, $newName) {
+        if(is_dir($this->getFileDBRootPath().$newName)) {
+            return false;
+        } elseif(is_dir($this->getFileDBRootPath().$oriName)) {
+            rename($this->getFileDBRootPath().$oriName, $this->getFileDBRootPath().$newName);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param $scenicId
+     * @return bool
+     */
+    public function delScenic($scenicId) {
+        if(strstr($scenicId, $this->getFileDBRootPath())) {
+            return $this->deldir($scenicId);
+        } else {
+            return $this->deldir($this->getFileDBRootPath().$scenicId);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function queryScenicIds() {
+        try {
+            $scenicIds = $this->queryAllScenicIdFromDB();
+            return $scenicIds;
+        } catch (Exception $e) {
+            return array();
+        }
+    }
+
+    /**
+     * @param $scenicId
+     * @return array
+     */
+    public function queryScenicContentUrls($scenicId) {
+        $res = array();
+        if(!is_dir($this->getFileDBRootPath().$scenicId)) {
+            return $res;
+        }
+        $filenames = scandir($this->getFileDBRootPath().$scenicId);
+        foreach ($filenames as $filename) {
+            $res[] = $this->getHostFileDBRootPath().$scenicId.'/'.$filename;
+        }
+        return $res;
+    }
 }

@@ -14,7 +14,7 @@ function test() {
 
 
 function scenicTitleImageUpload() {
-    api_name = 'ImageUpload.upload';
+    api_name = 'ScenicContentOperation.ImageUpload';
     var scenic_id = $("#scenic_id").html();
     if(isNaN(scenic_id)) {
         alert('scenic id 不是数字');
@@ -75,7 +75,7 @@ var callback_doScenicItemOption = function(rs) {
         return;
     }
     //alert(rs.data.info.path);
-    if(rs.data.info.path > 0) {
+    if(rs.data.info.path >= 0) {
         $("#result_scenic_item_option").html("新创建序号为：");
         $("#scenic_id").html(rs.data.info.path);
     } else {
@@ -120,7 +120,7 @@ var callback_scenicVoiceUpload = function(rs) {
 };
 
 function getAllScenic() {
-    api_name = 'ScenicContent.getBaseInfo';
+    api_name = 'ScenicContentOperation.getBaseInfo';
     if (debug) {
         //alert('url:'+url_path+' api:'+api_name+' id:'+scenic_id);
     }
@@ -135,7 +135,14 @@ var callback_showingBaseScenic = function(rs) {
     }
     //alert(rs.data.info.path);
     if(rs.data.info != null) {
-        $("#shoing_scenic_content").html("读取信息成功："+rs.data.info.url);
+        var html = '';
+        for(var x in rs.data.info) {
+            html += "<img src="+rs.data.info[x]+" width=250 height=200 />";
+            html += '<br>';
+            //alert(rs.data.info[x]);
+        }
+
+        $("#shoing_scenic_content").html("读取信息成功：<br>"+html);
     } else {
         $("#shoing_scenic_content").html("读取信息失败！");
     }
@@ -143,5 +150,5 @@ var callback_showingBaseScenic = function(rs) {
 
 $(function() {//加载时执行
     $("#shoing_scenic_content").html("读取数据。。。");
-
+    getAllScenic();
 });

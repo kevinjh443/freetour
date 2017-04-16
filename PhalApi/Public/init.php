@@ -42,6 +42,8 @@ SL('zh_cn');
 $loader->addDirs('Library');
 DI()->ucloud = new UCloud_Lite();
 
+$loader->addDirs('Freetour/FileDB');
+
 /**
 //签名验证服务
 DI()->filter = 'PhalApi_Filter_SimpleMD5';

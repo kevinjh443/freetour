@@ -20,6 +20,5 @@ class Domain_ImageUpload {
         } else {
             return $model->imageSaveToScenic($file, $file_name, $scenic_id);
         }
-        return null;
     }
 }

@@ -24,8 +24,13 @@
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <script src="Libs/jquery/jquery-3.2.0.min.js"></script>
     <script src="Bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="./PhalApi/SDK/JS/js/SDK/PhalApi.js"></script>
+    <script src="./Js/Main.js"></script>
 </head>
 <body>
 <h1>语音导览</h1>
+<div id="system_introduce"></div>
+<div id="impression_topic"></div>
+<div id="scenic_content"></div>
 </body>
 </html>

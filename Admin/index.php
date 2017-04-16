@@ -26,7 +26,7 @@ require_once('../PhalApi/Config/CommonVar.php');
     <script src="../Libs/jquery/jquery-3.2.0.min.js"></script>
     <script src="../Bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="../PhalApi/SDK/JS/js/SDK/PhalApi.js"></script>
-    <script src="./js/AdminFunction.js"></script>
+    <script src="./js/adminFunction.js"></script>
 </head>
 <body>
 <h3>一、上传封面图片</h3>
