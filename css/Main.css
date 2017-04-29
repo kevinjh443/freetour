@@ -1,0 +1,32 @@
+
+
+div#scenic_img {
+    position:relative;
+    width: 19%;
+    height: 19vw;
+    float: left;
+    margin-left: 1%;
+    margin-top: 2%;
+    z-index:-1;
+    overflow: hidden;
+}
+div#scenic_img>img {
+    width:97%;
+    height: 97%;
+    border: groove;
+}
+
+div#scenic_img>span {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    bottom: 4%;
+    width: 97%;
+    color: #fff;
+    background: rgba(0,0,0,.7);
+    height: 25%;
+    font-size: 100%;
+    text-align: center;
+    vertical-align: middle;
+    overflow: hidden;
+}

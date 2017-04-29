@@ -78,15 +78,37 @@ class Model_ScenicContentOperation extends FileDB {
      */
     public function getBaseInfo() {
         $res = array();
+        $res_one = array();
         $scenicIds = parent::queryScenicIds();
         foreach($scenicIds as $id) {
-            $urls = parent::queryScenicContentUrls($id);
-            foreach ($urls as $url) {
-                if(strstr($url, 'scenicTitle')) {
-                    $res['id_'.$id] = $url;
-                    break;
+            $filesInfo = parent::queryScenicContentFilesInfo($id);
+            $strTitleWords = '';
+            foreach ($filesInfo as $info) {
+                if(DI()->debug) {
+                    DI()->logger->debug($this->_TAG, $info['file_name']);
+                }
+                if(strstr($info['file_name'], 'scenicTitle')) {
+                    $res_one['title_image_url'] = $info['host_path'];
+                } elseif(strstr($info['file_name'], 'titleWords.txt')) {
+                    $fp = fopen($info['local_path'], "r");
+                    $strTitleWords = fread($fp, filesize($info['local_path']));
+                    if(DI()->debug) {
+                        DI()->logger->debug($this->_TAG, $strTitleWords);
+                    }
+                    if(!empty($strTitleWords)) {
+                        $res_one['title_words'] = $strTitleWords;
+                    }
                 }
             }
+
+            if (!empty($res_one['title_image_url'])) {
+                if (empty($strTitleWords)) {
+                    $res_one['title_words'] = 'NULL';
+                }
+                $res['id_'.$id] = $res_one;
+            }
+
+            unset($res_one);
         }
         return $res;
     }

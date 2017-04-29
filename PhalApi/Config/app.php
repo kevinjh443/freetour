@@ -22,7 +22,7 @@ return array(
      */
     'UCloud' => array(
         //对应的文件路径
-        'host' => 'http://localhost/freetour/PhalApi/Freetour/FileDB'
+        'host' => 'http://192.168.31.241/freetour/PhalApi/Freetour/FileDB'
     ),
 
 );

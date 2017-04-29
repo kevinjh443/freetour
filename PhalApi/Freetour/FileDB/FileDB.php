@@ -107,7 +107,7 @@ abstract class AFileDB {
     abstract function delScenic($scenicId);
 //
     abstract function queryScenicIds();
-    abstract function queryScenicContentUrls($scenicId);
+    abstract function queryScenicContentLocalPath($scenicId);
 //    public function queryAllScenicBaseInfo();
 //    public function getScenicDetailInfo($scenicId);
 //
@@ -216,14 +216,28 @@ class FileDB extends  AFileDB {
      * @param $scenicId
      * @return array
      */
-    public function queryScenicContentUrls($scenicId) {
+    public function queryScenicContentLocalPath($scenicId) {
         $res = array();
         if(!is_dir($this->getFileDBRootPath().$scenicId)) {
             return $res;
         }
         $filenames = scandir($this->getFileDBRootPath().$scenicId);
         foreach ($filenames as $filename) {
-            $res[] = $this->getHostFileDBRootPath().$scenicId.'/'.$filename;
+            $res[] = $this->getFileDBRootPath().$scenicId.'/'.$filename;
+        }
+        return $res;
+    }
+
+    public function queryScenicContentFilesInfo($scenicId) {
+        $res = array();
+        if(!is_dir($this->getFileDBRootPath().$scenicId)) {
+            return $res;
+        }
+        $filenames = scandir($this->getFileDBRootPath().$scenicId);
+        foreach ($filenames as $filename) {
+            $res[] = array('local_path'=>$this->getFileDBRootPath().$scenicId.'/'.$filename,
+                'host_path'=>$this->getHostFileDBRootPath().$scenicId.'/'.$filename,
+                'file_name'=>$filename);
         }
         return $res;
     }

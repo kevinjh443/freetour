@@ -26,11 +26,16 @@ var callback_main = function(rs) {
         var content_html = '';
         for(var x in rs.data.info) {
             if (x == 'systemIntroduce') {
-                $("#system_introduce").html("<img src="+rs.data.info[x]+" />");
+                $("#system_introduce_img").attr('src', rs.data.info[x]);
             } else if (x == 'impressionTopic') {
-                $("#impression_topic").html("<img src="+rs.data.info[x]+" />");
+                $("#impression_topic_img").attr('src', rs.data.info[x]);
             } else {
-                content_html += "<img src="+rs.data.info[x]+" width=200 height=200 />";
+                content_html += "<div id=\"scenic_img\">";
+                content_html += "<img src="+rs.data.info[x].title_image_url+" class=\"img-rounded\" alt="+x+" " +
+                "onclick=\"choicedScenic('"+x+"')\"/>";
+                content_html += "<span id='scenic_title_words'>"+rs.data.info[x].title_words+"</span>";
+                //content_html += "<input id='scenic_id_"+x+"' value="+x+" type=hidden>";
+                content_html += "</div>";
             }
         }
         $("#scenic_content").html(content_html);
@@ -38,3 +43,10 @@ var callback_main = function(rs) {
         $("#main").html("访问失败！");
     }
 };
+
+
+function choicedScenic(scenic_id) {
+
+    alert("you choiced "+scenic_id);
+
+}
