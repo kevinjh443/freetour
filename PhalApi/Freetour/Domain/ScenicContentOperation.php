@@ -44,4 +44,12 @@ class Domain_ScenicContentOperation {
         $model = new Model_ScenicContentOperation();
         return $model->imageUpload($file, $file_name, $scenic_id);
     }
+
+    public function getScenic($scenicId) {
+        if (strstr($scenicId, "id_")) {
+            $scenicId = str_replace(array("id_"),"",$scenicId);
+        }
+        $model = new Model_ScenicContentOperation();
+        return $model->getScenic($scenicId);
+    }
 }

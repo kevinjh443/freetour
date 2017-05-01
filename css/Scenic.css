@@ -1,0 +1,92 @@
+
+
+.scenic_pictures {
+    margin: 0 auto;
+    width: 100%;
+    height: 65vw;
+    overflow: hidden;
+    position: relative;
+}
+.inner {
+    position: relative;
+    width: 1000%;
+    height: 65vw;
+    left: 0;
+    top: 0;
+}
+.scenicpic_innerwraper {
+    width: 10%;
+    height: 100%;
+    float: left;
+}
+.scenicpic_innerwraper>img {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+.clearfix:after {
+    display: block;
+    clear: both;
+    visibility: hidden;
+    content: "";
+    height: 0;
+}
+a {
+    text-decoration: none;
+}
+.left-arrow {
+    position: absolute;
+    left: 0;
+    top: 40%;
+    width: 10%;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 20px;
+}
+.right-arrow {
+    position: absolute;
+    right: 0;
+    top: 40%;
+    width: 10%;
+    height: 20px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 20px;
+}
+.scenicpic_pagination{
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+.scenicpic_pagination span{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: yellow;
+    line-height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.scenicpic_pagination .scenicpic_active{
+    background-color: red;
+    color: #FFFFFF;
+}
+
+.scenic_words {
+    margin-top: 1%;
+    background-color: lightgreen;
+}
+
+.scenic_controller {
+    width: 100%;
+}
+
+.scenic_controller>audio {
+    width: 100%;
+}

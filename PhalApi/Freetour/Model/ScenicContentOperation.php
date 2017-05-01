@@ -142,4 +142,33 @@ class Model_ScenicContentOperation extends FileDB {
         return $res;
     }
 
+
+    /**
+     * @param $scenicId
+     * imgs , mp3, words
+     */
+    public function getScenic($scenicId) {
+        $res = array();
+        $filesInfo = parent::queryScenicContentFilesInfo($scenicId);
+        $imgId = 0;
+        foreach ($filesInfo as $info) {
+            if(strstr($info['file_name'], '.png') || strstr($info['file_name'], '.jpg')){
+                $res['img_'.$imgId] = $info['host_path'];
+                $imgId++;
+            } elseif(strstr($info['file_name'], '.mp3')) {
+                $res['voice_'] = $info['host_path'];
+            } elseif(strstr($info['file_name'], 'introduce_words_chinese.txt')) {
+                $intrWords = file_get_contents($info['local_path'], "r");
+                if(DI()->debug) {
+                    DI()->logger->debug($this->_TAG, $intrWords);
+                }
+                if(empty($intrWords)) {
+                    $res_one['introduce_words'] = "introduce words is NULL";
+                }
+                $res['introduce_words'] = $intrWords;
+            }
+        }
+        return $res;
+    }
+
 }

@@ -32,7 +32,7 @@ var callback_main = function(rs) {
             } else {
                 content_html += "<div id=\"scenic_img\">";
                 content_html += "<img src="+rs.data.info[x].title_image_url+" class=\"img-rounded\" alt="+x+" " +
-                "onclick=\"choicedScenic('"+x+"')\"/>";
+                "onclick=\"choicedScenic('"+x+"', '"+rs.data.info[x].title_words+"')\"/>";
                 content_html += "<span id='scenic_title_words'>"+rs.data.info[x].title_words+"</span>";
                 //content_html += "<input id='scenic_id_"+x+"' value="+x+" type=hidden>";
                 content_html += "</div>";
@@ -45,8 +45,7 @@ var callback_main = function(rs) {
 };
 
 
-function choicedScenic(scenic_id) {
-
-    alert("you choiced "+scenic_id);
+function choicedScenic(scenic_id, title_words) {
+    window.location.href="scenic.php?scenic_id="+scenic_id+"&title_words="+title_words;
 
 }

@@ -28,6 +28,10 @@ class Api_ScenicContentOperation extends PhalApi_Api {
                 'imageFunc' => array('name' => 'image_func'),
                 'scenicId' => array('name' => 'scenic_id'),
             ),
+
+            'getScenic' => array(
+                'id' => array('name' => 'scenic_id', 'default' => '0', 'desc' => 'scenic ID'),
+            ),
         );
     }
 
@@ -72,6 +76,13 @@ class Api_ScenicContentOperation extends PhalApi_Api {
         $res = array('code' => 0, 'msg' => '', 'info' => '');
         $domain = new Domain_ScenicContentOperation();
         $res['info'] = $domain->imageUpload($this->file, $this->imageFunc, $this->scenicId);
+        return $res;
+    }
+
+    public function getScenic() {
+        $res = array('code' => 0, 'msg' => '', 'info' => '');
+        $domain = new Domain_ScenicContentOperation();
+        $res['info'] = $domain->getScenic($this->id);
         return $res;
     }
 }

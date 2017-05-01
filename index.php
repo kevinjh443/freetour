@@ -12,7 +12,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>巫山·语音导览</title>
+    <title>旅游·巫山</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- for adapt phone device screen -->
     <!-- 引入 Bootstrap -->
     <link href="Bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
